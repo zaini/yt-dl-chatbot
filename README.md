@@ -1,6 +1,8 @@
 # yt-dl-chatbot
 Simple chatbot to download YouTube videos for Telegram (and maybe WhatsApp soon)
 
+If I'm hosting this, it'll be running on @yt_dl_chatbot on Telegram
+
 # Features
 * Download any YouTube video quickly and easily
 * Videos are sent directly on Telegram
