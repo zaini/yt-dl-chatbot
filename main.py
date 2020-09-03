@@ -9,9 +9,11 @@ TOKEN = os.getenv('TOKEN')
 
 
 def download_stream(itag):
-    url="https://youtu.be/2wcI10CNuxU"
+    url = "https://youtu.be/2wcI10CNuxU"
     yt = YouTube(url)
-    yt.streams.get_by_itag(itag).download(output_path = "downloads/")
+    path_to_download = yt.streams.get_by_itag(
+        itag).download(output_path="downloads/")
+    return path_to_download
 
 
 def get_download_keyboard(url="https://youtu.be/2wcI10CNuxU"):
@@ -26,8 +28,9 @@ def get_download_keyboard(url="https://youtu.be/2wcI10CNuxU"):
         quality = stream.resolution if stream.resolution != None else stream.abr
         quality = quality if quality != None else "❔"
         # print("{} {}".format(quality, mime_type), stream.itag)
-        keyboard.append([InlineKeyboardButton("{} {}".format(
-            quality, mime_type), callback_data=str(stream.itag))])
+        description = "{} {}".format(quality, mime_type)
+        data = "{} : {}".format(stream.itag, description)
+        keyboard.append([InlineKeyboardButton(description, callback_data=data)])
 
     return keyboard
 
@@ -35,8 +38,10 @@ def get_download_keyboard(url="https://youtu.be/2wcI10CNuxU"):
 def button(update, context):
     query = update.callback_query
     query.answer()
-    query.edit_message_text(text="Selected option: {}".format(query.data))
-    download_stream(query.data)
+    itag, description = query.data.split(":")
+    query.edit_message_text(
+        text="Selected option: {}".format(description))
+    download_stream(itag)
 
 
 def hello(update, context):
