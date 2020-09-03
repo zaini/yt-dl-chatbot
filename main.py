@@ -30,7 +30,8 @@ def get_download_keyboard(url="https://youtu.be/2wcI10CNuxU"):
         # print("{} {}".format(quality, mime_type), stream.itag)
         description = "{} {}".format(quality, mime_type)
         data = "{} : {}".format(stream.itag, description)
-        keyboard.append([InlineKeyboardButton(description, callback_data=data)])
+        keyboard.append([InlineKeyboardButton(
+            description, callback_data=data)])
 
     return keyboard
 
@@ -52,12 +53,16 @@ def hello(update, context):
         # ask user if they want audio or video
         # show them the various sizes of video/audio
         # download and upload to telegram the file they have requested
-        keyboard = get_download_keyboard()
-        reply_markup = InlineKeyboardMarkup(keyboard)
+        url = update.message.text[3:]
+        try:
+            keyboard = get_download_keyboard(url)
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            update.message.reply_text(
+                'Please choose an option:', reply_markup=reply_markup)
+            response = "Your download will begin after you select an option."
+        except:
+            response = "You have not entered a valid YouTube URL"
 
-        update.message.reply_text(
-            'Please choose an option:', reply_markup=reply_markup)
-        response = "Your download will begin after you select an option."
     else:
         response = 'Hello {} you said {}'.format(
             update.message.from_user.first_name, update.message.text)
