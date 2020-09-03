@@ -63,7 +63,7 @@ class Bot:
 
     def main_handler(self, update, context):
         if (update.message.text.lower()) == "help":
-            response = 'Hello {} you are asking for help.\nI will help you in a sec...'.format(update.message.from_user.first_name)
+            response = 'Hello {}.\n\nThis bot is incredibly simple to use. Just send a link to the YouTube video you would like to download, and it will sent to you.\n\ne.g. just send "https://youtu.be/E9oKEJ1pXPw"'.format(update.message.from_user.first_name)
         else:
             try:
                 self.url = url = update.message.text[3:]
