@@ -8,12 +8,18 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
 
-def get_download_keyboard(url="http://youtube.com/watch?v=9bZkp7q19f0"):
+def download_stream(itag):
+    url="https://youtu.be/2wcI10CNuxU"
+    yt = YouTube(url)
+    yt.streams.get_by_itag(itag).download(output_path = "downloads/")
+
+
+def get_download_keyboard(url="https://youtu.be/2wcI10CNuxU"):
     yt = YouTube(url)
 
     keyboard = []
 
-    for stream in yt.streams.all():
+    for stream in yt.streams.filter(progressive=True).order_by('resolution'):
         # print(stream)
         mime_type = "{} {}".format(
             "🎵" if "audio" in stream.mime_type else "📺", stream.mime_type)
@@ -30,6 +36,7 @@ def button(update, context):
     query = update.callback_query
     query.answer()
     query.edit_message_text(text="Selected option: {}".format(query.data))
+    download_stream(query.data)
 
 
 def hello(update, context):
