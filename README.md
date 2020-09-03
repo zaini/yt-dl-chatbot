@@ -32,6 +32,8 @@ Made this because I'd heard that Telegram is really open to people creating bots
 
 The reason why I made a YouTube downloader in particular is that I've had requests to make one before. Still have to check that this meets the requirements of those who want to use it. I'll probably also expand it to work with Twitter videos.
 
+Also the downloaded videos stay downloaded. Deal with that however you want.
+
 You may need to apply this fix to pytude: https://github.com/nficano/pytube/issues/642#issuecomment-637671478
 
 ## Some of the libraries used
